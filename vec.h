@@ -25,7 +25,8 @@
         void init();
         void free();
         size_t count();
-        void push(T val);
+        T &at(size_t);
+        void push(T);
         T pop();
         vec<T> clone();
 
@@ -66,6 +67,15 @@
  */
 #define vec_count(v) \
     (0, _vec_Co(v))
+
+/**
+ * Access an element by index (both lvalue and rvalue).
+ * @param v - the vector
+ * @param idx - the index
+ * @return size_t
+ */
+#define vec_at(v, idx) \
+    ((v)[idx])
 
 /**
  * Push a value as the last element.
