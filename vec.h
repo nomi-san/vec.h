@@ -29,6 +29,7 @@
         void push(T);
         T pop();
         vec<T> clone();
+        void reverse();
 
         !foreach(T, var);
     }
@@ -86,7 +87,7 @@
 #define vec_push(v, val) \
     do {                                        \
         size_t *base = &((size_t *)(v))[-2];    \
-        if (base[0] >= base[1])  {              \
+        if (base[0] + 1 >= base[1])  {          \
             base = realloc(base,                \
                 _vec_H_sz + _vec_Sz(v) *        \
                 (base[1] *= vec_factor));       \
@@ -121,5 +122,19 @@
 #define vec_foreach(v, T, it) \
     for (T it, *_vb = _vec_B(v), *_ve = _vec_E(v); \
         it = *_vb, _vb != _ve; ++_vb)
+
+/**
+ * Reverse order of all elements.
+ * @param v - the vector
+ */
+#define vec_reverse(v) \
+    do {                                            \
+        size_t s = _vec_Co(v), e = _vec_Ca(v) - 1;  \
+        for (size_t i = 0, m = s / 2; i < m; i++) { \
+            vec_at(v, e) = vec_at(v, i);            \
+            vec_at(v, i) = vec_at(v, s - 1 - i);    \
+            vec_at(v, s - 1 - i) = vec_at(v, e);    \
+        }                                           \
+    } while (0)
 
 #endif
