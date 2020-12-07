@@ -30,6 +30,7 @@
         T pop();
         vec<T> clone();
         void reverse();
+        T shift();
 
         !foreach(T, var);
     }
@@ -136,5 +137,16 @@
             vec_at(v, s - 1 - i) = vec_at(v, e);    \
         }                                           \
     } while (0)
+
+/**
+ * Remove the first element.
+ * @param v - the vector
+ * @return the first element
+ */
+#define vec_shift(v) \
+    (vec_at(v, _vec_Ca(v) - 1) = vec_at(v, 0),      \
+        memcpy((v), (v) + 1,                        \
+            _vec_Sz(v) * _vec_Co(v)--),             \
+        vec_at(v, _vec_Ca(v) - 1))
 
 #endif
