@@ -28,6 +28,7 @@
         T &at(size_t);
         void push(T);
         T pop();
+        void concat(vec<T>);
         vec<T> clone();
         void reverse();
         T shift();
@@ -106,13 +107,28 @@
     (0, (v)[--_vec_Co(v)])
 
 /**
+ * Merge with another vector.
+ * @param v - the vector
+ * @param v2 - the vector 2
+ */
+#define vec_concat(v, v2) \
+    do {                                    \
+        for (size_t i = 0, e = _vec_Co(v2); \
+            i < e; i++) {                   \
+            vec_push(v, vec_at(v2, i));     \
+        }                                   \
+    } while (0)
+
+/**
  * Clone the vector.
  * @param v - the vector
  * @return the new vector
  */
 #define vec_clone(v) \
-    memcpy(malloc(_vec_H_sz + _vec_Sz(a) * _vec_Ca(v)),     \
-        _vec_H(v), _vec_H_sz + _vec_Sz(a) * _vec_Ca(v));
+    ((void *)((size_t)memcpy(malloc(                    \
+        _vec_H_sz +_vec_Sz(v) * _vec_Ca(v)),            \
+        _vec_H(v), _vec_H_sz + _vec_Sz(v) * _vec_Co(v)  \
+        ) + _vec_H_sz))
 
 /**
  * Iterate through the vevtor, like a statement.
