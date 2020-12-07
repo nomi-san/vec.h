@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdlib.h>
+#include <string.h>
 
 // Internal macros, do not use.
 #define _vec_H_sz   (sizeof(size_t) * 2)
